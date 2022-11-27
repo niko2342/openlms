@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: dbadmin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: openlms
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U dbadmin -d openlms'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  pgdata:
+
